@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!movieResoruces.loading && movieResoruces.doc">
+  <div v-if="!movieResources.loading && movieResources.doc">
     <h1 class="text-grey-900 font-bold text-[32px]">{{ movieDoc.title }}</h1>
     <div class="mt-11 flex flex-row items-center justify-between">
       <div class="flex flex-col space-y-3">
@@ -13,7 +13,7 @@
         <h2 class="text-grey-700 text-base font-bold uppercase">
           Release Date
         </h2>
-        <h2 class="text-grey-600text-xl font-semibold">
+        <h2 class="text-grey-600 text-xl font-semibold">
           {{ movieDoc.release_date }}
         </h2>
       </div>
@@ -103,7 +103,7 @@
                   : seat[1] === 'Selected'
                   ? 'bg-blue-600'
                   : 'bg-gray-300',
-                hasSelecetedCorrectNumberOfSeats
+                hasSelectedCorrectNumberOfSeats
                   ? 'cursor-not-allowed'
                   : 'cursor-pointer',
               ]"
@@ -127,7 +127,7 @@
       <Button
         class="mt-5"
         size="lg"
-        :variant="subtule"
+        :variant="subtle"
         v-if="currentstep !== 0 && currentstep !== 4"
         @click="currentstep--"
         >Go Back</Button
@@ -151,7 +151,7 @@ import { createDocumentResource, createListResource } from 'frappe-ui'
 
 const movieName = ref('Lucky Baskhar')
 
-const movieResoruces = createDocumentResource({
+const movieResources = createDocumentResource({
   doctype: 'Movie',
   name: movieName.value,
   onSuccess(doc) {
@@ -200,7 +200,7 @@ const seatStructure = reactive(
   getSeatStructure(['A', 'B', 'C', 'D', 'E'], [1, 2, 3, 4, 5, 6, 7])
 )
 
-const today = new Date().toISOString
+const today = new Date().toISOString()
 const currentstep = ref(0)
 
 const bookingData = reactive({
@@ -216,7 +216,7 @@ function setNumberOfSeats(n) {
 }
 
 function selectSeat(row, number) {
-  if (hasSelecetedCorrectNumberOfSeats.value) {
+  if (hasSelectedCorrectNumberOfSeats.value) {
     return
   }
   const seat = seatStructure[row].find((seat) => seat[0] === number)
@@ -224,7 +224,7 @@ function selectSeat(row, number) {
   bookingData.selectedSeats.push(`${row}${number}`)
 }
 
-const hasSelecetedCorrectNumberOfSeats = computed(() => {
+const hasSelectedCorrectNumberOfSeats = computed(() => {
   return bookingData.selectedSeats.length === bookingData.numberOfSeats
 })
 
@@ -244,7 +244,7 @@ const nextButtonEnabled = computed(() => {
 })
 
 function handleNextClick() {
-  if (currentstep.value != 3) {
+  if (currentstep.value !== 3) {
     currentstep.value++
     return
   } 
